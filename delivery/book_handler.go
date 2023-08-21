@@ -17,7 +17,7 @@ type BookHandler interface {
 }
 
 type bookHandler struct {
-	bookHandler usecase.BookUsecase
+	bookUsecase usecase.BookUsecase
 }
 
 func NewBookHandler(bookUsecase usecase.BookUsecase) *bookHandler {
@@ -32,7 +32,7 @@ func (h *bookHandler) AddBook(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	err = h.bookHandler.Store(&newBook)
+	err = h.bookUsecase.Store(&newBook)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
@@ -41,7 +41,7 @@ func (h *bookHandler) AddBook(c echo.Context) error {
 }
 
 func (h *bookHandler) GetAllBooks(c echo.Context) error {
-	books, err := h.bookHandler.Fetch()
+	books, err := h.bookUsecase.Fetch()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
@@ -62,7 +62,7 @@ func (h *bookHandler) UpdateBook(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	err = h.bookHandler.Update(id, &newBook)
+	err = h.bookUsecase.Update(id, &newBook)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
@@ -76,7 +76,7 @@ func (h *bookHandler) DeleteBook(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	err = h.bookHandler.Delete(id)
+	err = h.bookUsecase.Delete(id)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
