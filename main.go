@@ -38,6 +38,8 @@ func main() {
 
 	e.POST("/books", bookHandler.AddBook)
 	e.GET("/books", bookHandler.GetAllBooks)
+	e.PUT("/books/:id", bookHandler.UpdateBook)
+	e.DELETE("/books/:id", bookHandler.DeleteBook)
 
 	e.Start(":8080")
 }

@@ -9,6 +9,8 @@ import (
 type BookRepository interface {
 	Store(book *entities.Book) error
 	Fetch() ([]entities.Book, error)
+	Update(id int, book *entities.Book) error
+	Delete(id int) error
 }
 
 type bookRepository struct {
@@ -53,4 +55,26 @@ func (b *bookRepository) Fetch() ([]entities.Book, error) {
 	}
 
 	return books, nil
+}
+
+func (b *bookRepository) Update(id int, book *entities.Book) error {
+	stmt := `update books set name=$1, year=$2 where id=$3`
+
+	_, err := b.db.Exec(stmt, book.Name, book.Year, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (b *bookRepository) Delete(id int) error {
+	stmt := `delete from books where id=$1`
+
+	_, err := b.db.Exec(stmt, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
