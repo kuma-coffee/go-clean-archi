@@ -1,9 +1,7 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
-
+	"github.com/kuma-coffee/go-clean-archi/db"
 	route "github.com/kuma-coffee/go-clean-archi/delivery"
 	"github.com/kuma-coffee/go-clean-archi/repository"
 	"github.com/kuma-coffee/go-clean-archi/usecase"
@@ -11,24 +9,9 @@ import (
 	_ "github.com/lib/pq"
 )
 
-const (
-	host     = "localhost"
-	username = "postgres"
-	password = "postgres"
-	dbName   = "test"
-	port     = 5432
-)
-
 func main() {
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-		"password=%s dbname=%s sslmode=disable",
-		host, port, username, password, dbName)
 
-	db, err := sql.Open("postgres", psqlInfo)
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
+	db := db.CreateConn()
 
 	e := echo.New()
 
