@@ -6,7 +6,7 @@ import (
 
 	"github.com/kuma-coffee/go-clean-archi/entities"
 	"github.com/kuma-coffee/go-clean-archi/usecase"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo"
 )
 
 type BookHandler interface {
