@@ -15,7 +15,6 @@ func CreateConn() *sql.DB {
 		conf.HOST, conf.PORT, conf.USER_NAME, conf.PASSWORD, conf.DB_NAME)
 
 	db, err := sql.Open("postgres", psqlInfo)
-	fmt.Println(err)
 	if err != nil {
 		panic(err)
 	}
