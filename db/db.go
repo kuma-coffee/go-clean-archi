@@ -13,7 +13,6 @@ func CreateConn() *sql.DB {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		conf.HOST, conf.PORT, conf.USER_NAME, conf.PASSWORD, conf.DB_NAME)
-	fmt.Println(psqlInfo)
 
 	db, err := sql.Open("postgres", psqlInfo)
 	fmt.Println(err)
