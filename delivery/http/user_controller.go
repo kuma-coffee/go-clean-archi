@@ -13,6 +13,7 @@ import (
 
 type UserHandler interface {
 	CheckLogin(c echo.Context) error
+	Register(c echo.Context) error
 }
 
 type userHandler struct {
@@ -66,4 +67,20 @@ func (h *userHandler) CheckLogin(c echo.Context) error {
 	return c.JSON(http.StatusOK, echo.Map{
 		"token": t,
 	})
+}
+
+func (h *userHandler) Register(c echo.Context) error {
+	var newUser entities.User
+
+	err := c.Bind(&newUser)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	err = h.userUsecase.Register(&newUser)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.JSON(http.StatusCreated, "success create user")
 }

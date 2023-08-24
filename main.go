@@ -30,6 +30,7 @@ func main() {
 
 	e.GET("/generate-hash/:password", route.GenerateHashPassword)
 	e.POST("/login", userHandler.CheckLogin)
+	e.POST("/register", userHandler.Register)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }

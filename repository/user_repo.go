@@ -9,6 +9,7 @@ import (
 
 type UserRepository interface {
 	CheckLogin(username, password string) (bool, error)
+	Register(user *entities.User) error
 }
 
 type userRepository struct {
@@ -22,7 +23,7 @@ func NewUserRepo(db *sql.DB) *userRepository {
 func (u *userRepository) CheckLogin(username, password string) (bool, error) {
 	newUser := entities.User{}
 
-	stmt := "SELECT * FROM users WHERE username = $1"
+	stmt := `select * from users where username = $1`
 
 	err := u.db.QueryRow(stmt, username).Scan(&newUser.ID, &newUser.Username, &newUser.Password)
 	if err != nil {
@@ -35,4 +36,15 @@ func (u *userRepository) CheckLogin(username, password string) (bool, error) {
 	}
 
 	return true, nil
+}
+
+func (u *userRepository) Register(user *entities.User) error {
+	stmt := `insert into users(username, password) values($1, $2)`
+
+	_, err := u.db.Exec(stmt, user.Username, user.Password)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
