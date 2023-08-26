@@ -64,6 +64,11 @@ func (h *userHandler) CheckLogin(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
+	// err = middleware.WriteCookie(t, c)
+	// if err != nil {
+	// 	return c.JSON(http.StatusInternalServerError, err.Error())
+	// }
+
 	return c.JSON(http.StatusOK, echo.Map{
 		"token": t,
 	})

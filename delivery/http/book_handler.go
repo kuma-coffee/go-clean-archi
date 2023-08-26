@@ -41,6 +41,11 @@ func (h *bookHandler) AddBook(c echo.Context) error {
 }
 
 func (h *bookHandler) GetAllBooks(c echo.Context) error {
+	// err := middleware.ReadCookie(c)
+	// if err != nil {
+	// 	return c.JSON(http.StatusInternalServerError, err.Error())
+	// }
+
 	books, err := h.bookUsecase.Fetch()
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())

@@ -32,5 +32,10 @@ func main() {
 	e.POST("/login", userHandler.CheckLogin)
 	e.POST("/register", userHandler.Register)
 
+	uploadHandler := route.NewUploadHanlder()
+
+	e.Static("/", "public")
+	e.POST("/upload", uploadHandler.Upload)
+
 	e.Logger.Fatal(e.Start(":8080"))
 }
