@@ -22,9 +22,9 @@ func NewBookRepo(db *sql.DB) *bookRepository {
 }
 
 func (b *bookRepository) Store(book *entities.Book) error {
-	stmt := `insert into "books"("id", "name", "year")values($1, $2, $3)`
+	stmt := `insert into "books"("id", "name", "year", "book_photo")values($1, $2, $3, $4)`
 
-	_, err := b.db.Exec(stmt, book.ID, book.Name, book.Year)
+	_, err := b.db.Exec(stmt, book.ID, book.Name, book.Year, book.Photo)
 	if err != nil {
 		return err
 	}

@@ -15,6 +15,8 @@ func main() {
 
 	e := echo.New()
 
+	e.Static("/", "public")
+
 	bookRepo := repository.NewBookRepo(db)
 	bookUsecase := usecase.NewBookUsecase(bookRepo)
 	bookHandler := route.NewBookHandler(bookUsecase)
@@ -32,10 +34,10 @@ func main() {
 	e.POST("/login", userHandler.CheckLogin)
 	e.POST("/register", userHandler.Register)
 
-	uploadHandler := route.NewUploadHanlder()
+	// uploadHandler := route.NewUploadHanlder()
 
-	e.Static("/", "public")
-	e.POST("/upload", uploadHandler.Upload)
+	// e.Static("/", "public")
+	// e.POST("/upload", uploadHandler.Upload)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }

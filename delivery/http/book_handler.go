@@ -25,12 +25,26 @@ func NewBookHandler(bookUsecase usecase.BookUsecase) *bookHandler {
 }
 
 func (h *bookHandler) AddBook(c echo.Context) error {
-	var newBook entities.Book
+	// var newBook entities.Book
 
-	err := c.Bind(&newBook)
+	name := c.FormValue("name")
+	year := c.FormValue("year")
+	file, err := c.FormFile("file")
+	if err != nil {
+		return err
+	}
+
+	// err := c.Bind(&newBook)
+	// if err != nil {
+	// 	return c.JSON(http.StatusInternalServerError, err.Error())
+	// }
+
+	err = Upload(*file, c)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
+
+	newBook := entities.Book{Name: name, Year: year, Photo: file.Filename}
 
 	err = h.bookUsecase.Store(&newBook)
 	if err != nil {
