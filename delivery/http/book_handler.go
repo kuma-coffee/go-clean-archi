@@ -30,6 +30,7 @@ func (h *bookHandler) AddBook(c echo.Context) error {
 	name := c.FormValue("name")
 	year := c.FormValue("year")
 	file, err := c.FormFile("file")
+	// file, err := c.MultipartForm()
 	if err != nil {
 		return err
 	}
@@ -44,7 +45,7 @@ func (h *bookHandler) AddBook(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
-	newBook := entities.Book{Name: name, Year: year, Photo: file.Filename}
+	newBook := entities.Book{Name: name, Year: year, Photo: ""}
 
 	err = h.bookUsecase.Store(&newBook)
 	if err != nil {
